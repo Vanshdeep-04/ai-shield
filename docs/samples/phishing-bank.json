@@ -1,0 +1,9 @@
+{
+  "source": "MANUAL",
+  "from": "\"HDFC Bank Alerts\" <alerts.hdfc@secure-mailer.example>",
+  "replyTo": "verify@collect-desk.example",
+  "subject": "URGENT: Your account will be suspended in 24 hours",
+  "bodyText": "Dear customer,\n\nWe detected unusual activity on your account. To avoid permanent suspension you must verify your identity within 24 hours.\n\nClick the secure link below and enter your customer ID, password and the OTP sent to your phone.\n\nFailure to comply will result in your account being blocked.\n\nHDFC Bank Security Team",
+  "bodyHtml": "<p>Dear customer,</p><p>We detected unusual activity on your account.</p><p><a href=\"http://192.168.4.20/hdfc/login.php\">https://www.hdfcbank.com/verify</a></p>",
+  "receivedAt": "2026-11-18T10:15:00Z"
+}

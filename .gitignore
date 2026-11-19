@@ -1,0 +1,31 @@
+# Secrets
+.env
+*.env.local
+**/google-services.json
+**/*.keystore
+**/*.jks
+
+# Project-local tools and caches (Maven repository, npm cache, logs)
+.tools/
+
+# Backend
+backend/target/
+
+# Mobile
+mobile/node_modules/
+mobile/.expo/
+mobile/dist/
+mobile/android/
+mobile/ios/
+mobile/coverage/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
+
+# Local AI-assistant settings (not part of the project)
+.claude/
+**/.claude/

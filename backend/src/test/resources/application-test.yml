@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    # In-memory H2 in MySQL compatibility mode; runs the same Flyway migration as production MySQL.
+    url: jdbc:h2:mem:aishield;MODE=MySQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1
+    username: sa
+    password: ""
+    driver-class-name: org.h2.Driver
+
+aishield:
+  analysis-requests-per-minute: 1000
+  security:
+    auth-mode: dev
+  gemini:
+    # Tests never call the real API; Gemini is mocked.
+    api-key: ""
+    max-retries: 1
+    retry-backoff: 1ms

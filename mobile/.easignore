@@ -1,0 +1,26 @@
+# Files never uploaded to EAS Build.
+# EAS commands for this project must run with EAS_NO_VCS=1 (see docs/MOBILE.md), because the
+# surrounding folder belongs to a larger git repository; this file then defines what is excluded.
+
+node_modules/
+.expo/
+dist/
+web-build/
+android/
+ios/
+coverage/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+*.jks
+*.keystore
+*.p8
+*.p12
+*.key
+*.pem
+
+# Tooling
+.claude/
+*.log

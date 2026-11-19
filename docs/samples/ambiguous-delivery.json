@@ -1,0 +1,7 @@
+{
+  "source": "MANUAL",
+  "from": "Parcel Updates <updates@parcel-notify.example>",
+  "subject": "Your parcel could not be delivered",
+  "bodyText": "Hello,\n\nWe attempted to deliver your parcel today but nobody was available.\nYou can choose a new delivery date here: https://bit.ly/3xYzAbC\n\nIf no date is selected within 5 days the parcel will be returned to the sender.\n\nParcel Updates",
+  "receivedAt": "2026-11-16T14:30:00Z"
+}

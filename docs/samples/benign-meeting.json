@@ -1,0 +1,7 @@
+{
+  "source": "MANUAL",
+  "from": "Project Coordinator <coordinator@university.example>",
+  "subject": "Reminder: project review meeting on Friday",
+  "bodyText": "Hi team,\n\nThis is a reminder that our project review meeting is on Friday at 3 pm in Room 204.\nThe agenda is available on the department page: https://university.example/projects/agenda\n\nPlease bring your progress slides.\n\nThanks,\nProject Coordinator",
+  "receivedAt": "2026-11-17T08:00:00Z"
+}

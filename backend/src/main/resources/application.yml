@@ -1,0 +1,99 @@
+# AI Shield backend configuration.
+# Every secret or environment-specific value comes from an environment variable.
+# See ../.env.example and ../docs/SETUP.md.
+
+spring:
+  application:
+    name: ai-shield-backend
+  config:
+    # Loads KEY=value pairs from the project's .env file (never committed). Real environment
+    # variables still take precedence.
+    import: "optional:file:../.env[.properties],optional:file:./.env[.properties]"
+  datasource:
+    # MySQL 8. allowPublicKeyRetrieval/useSSL=false are for a local, same-machine server only;
+    # use TLS (sslMode=REQUIRED) for any remote database.
+    url: ${DB_URL:jdbc:mysql://localhost:3306/aishield?serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=UTF-8}
+    username: ${DB_USERNAME:aishield}
+    password: ${DB_PASSWORD:}
+    hikari:
+      connection-timeout: 5000
+      maximum-pool-size: 5
+  jpa:
+    open-in-view: false
+    hibernate:
+      # Flyway owns the schema (src/main/resources/db/migration); Hibernate never changes it.
+      ddl-auto: none
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  jackson:
+    default-property-inclusion: non_null
+    deserialization:
+      fail-on-unknown-properties: false
+  mvc:
+    problemdetails:
+      enabled: true
+
+server:
+  port: ${PORT:8080}
+  # Error responses never include stack traces or exception messages.
+  error:
+    include-stacktrace: never
+    include-message: never
+    include-binding-errors: never
+  tomcat:
+    max-swallow-size: 1MB
+    connection-timeout: 20s
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+      probes:
+        enabled: false
+
+logging:
+  level:
+    root: INFO
+    com.aishield: INFO
+    # Never log request bodies.
+    org.springframework.web: WARN
+
+aishield:
+  # Maximum accepted HTTP request body in bytes (enforced by RequestSizeLimitFilter).
+  max-request-bytes: ${AISHIELD_MAX_REQUEST_BYTES:600000}
+  # Per-user limit on analysis requests, protecting the Gemini free-tier quota.
+  analysis-requests-per-minute: ${AISHIELD_ANALYSIS_RPM:8}
+  cors:
+    # Comma-separated list. React Native apps do not send an Origin header, so this
+    # only matters for browser-based tools (e.g. Expo web during development).
+    allowed-origins: ${AISHIELD_CORS_ORIGINS:http://localhost:8081}
+  security:
+    # "google" (default): every /api request needs a valid Google ID token.
+    # "dev": local testing only (Postman/curl); requests act as one fixed demo user.
+    auth-mode: ${AISHIELD_AUTH_MODE:google}
+    # OAuth 2.0 *Web* client ID used by the mobile app; Google ID tokens must carry it as "aud".
+    google-client-ids: ${GOOGLE_OAUTH_WEB_CLIENT_ID:}
+  gemini:
+    api-key: ${GEMINI_API_KEY:}
+    model: ${GEMINI_MODEL:gemini-3.5-flash-lite}
+    base-url: ${GEMINI_BASE_URL:https://generativelanguage.googleapis.com/v1beta}
+    # Header value used in Google's Interactions API REST examples. Leave blank to omit the header.
+    api-revision: ${GEMINI_API_REVISION:2026-05-20}
+    connect-timeout: 5s
+    read-timeout: 30s
+    # One extra attempt for transient failures (429 rate limit / 503 / timeout). Never infinite.
+    max-retries: 1
+    retry-backoff: 2s
+    # Email text longer than this is truncated before it is sent to Gemini.
+    max-input-chars: 15000
+    # Generous because newer models may spend part of the budget on internal reasoning.
+    max-output-tokens: 4096
